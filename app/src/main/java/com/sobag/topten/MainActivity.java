@@ -18,8 +18,7 @@ public class MainActivity extends ActionBarActivity {
         Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
-        Crashlytics.start(this);
-        Toast.makeText(this,"Division by zero..." +4/0,Toast.LENGTH_SHORT).show();
+        invokeCrashlytics();
     }
 
 
@@ -40,5 +39,12 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // trigger crashlytics...
+    private void invokeCrashlytics()
+    {
+        Crashlytics.start(this);
+        Toast.makeText(this,"Division by zero..." +4/0,Toast.LENGTH_SHORT).show();
     }
 }
