@@ -19,7 +19,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         Crashlytics.start(this);
-        Toast.makeText(this,"Division by zero..." +4/0,Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this,"Division by zero..." +4/0,Toast.LENGTH_SHORT).show();
     }
 
 
