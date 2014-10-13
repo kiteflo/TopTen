@@ -57,16 +57,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
     // trigger GSON...
-private void invokeGSON()
-{
-    User user = new User("barty","Bart","Simpson","Springfield");
+    private void invokeGSON()
+    {
+        User user = new User("barty","Bart","Simpson","Springfield");
 
-    // serialize from object to JSON
-    String userJSON = new Gson().toJson(user);
-    Log.i(LOG_TAG,"User JSON:" +userJSON);
+        // serialize from object to JSON
+        String userJSON = new Gson().toJson(user);
+        Log.i(LOG_TAG,"User JSON:" +userJSON);
 
-    // deserialize from JSON to object
-    User deserializedUser = new Gson().fromJson(userJSON,User.class);
-    Log.i(LOG_TAG,"Username: " +deserializedUser.getUsername());
-}
+        // deserialize from JSON to object
+        User deserializedUser = new Gson().fromJson(userJSON,User.class);
+        Log.i(LOG_TAG,"Username: " +deserializedUser.getUsername());
+    }
 }
