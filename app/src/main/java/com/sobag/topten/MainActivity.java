@@ -8,9 +8,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+import com.sobag.topten.domain.User;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private static String LOG_TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,10 +22,9 @@ public class MainActivity extends ActionBarActivity {
         Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
-        Crashlytics.start(this);
-        // Toast.makeText(this,"Division by zero..." +4/0,Toast.LENGTH_SHORT).show();
+        // invokeCrashlytics();
+        invokeGSON();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -41,4 +44,29 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // ------------------------------------------------------------------------
+    // private usage
+    // ------------------------------------------------------------------------
+
+    // trigger crashlytics...
+    private void invokeCrashlytics()
+    {
+        Crashlytics.start(this);
+        Toast.makeText(this,"Division by zero..." +4/0,Toast.LENGTH_SHORT).show();
+    }
+
+    // trigger GSON...
+private void invokeGSON()
+{
+    User user = new User("barty","Bart","Simpson","Springfield");
+
+    // serialize from object to JSON
+    String userJSON = new Gson().toJson(user);
+    Log.i(LOG_TAG,"User JSON:" +userJSON);
+
+    // deserialize from JSON to object
+    User deserializedUser = new Gson().fromJson(userJSON,User.class);
+    Log.i(LOG_TAG,"Username: " +deserializedUser.getUsername());
+}
 }
