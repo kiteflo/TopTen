@@ -1,18 +1,31 @@
 package com.sobag.topten;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
+import com.google.inject.Inject;
+import com.sobag.topten.domain.Model;
 import com.sobag.topten.domain.User;
 
+import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends RoboActivity
+{
+    @InjectView(R.id.tv_hello)
+    TextView tvHello;
+
+    @Inject
+    Model model;
 
     private static String LOG_TAG = "MainActivity";
 
@@ -23,7 +36,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // invokeCrashlytics();
-        invokeGSON();
+        // invokeGSON();
+        invokeRoboGuice();
     }
 
     @Override
@@ -43,6 +57,18 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onIncrease(View view)
+    {
+        model.setCounter(model.getCounter()+1);
+        tvHello.setText("Current Count: " +model.getCounter());
+    }
+
+    public void onNext(View view)
+    {
+        Intent nextpage = new Intent(this,SecondActivity.class);
+        startActivity(nextpage);
     }
 
     // ------------------------------------------------------------------------
@@ -67,6 +93,12 @@ public class MainActivity extends ActionBarActivity {
 
         // deserialize from JSON to object
         User deserializedUser = new Gson().fromJson(userJSON,User.class);
-        Log.i(LOG_TAG,"Username: " +deserializedUser.getUsername());
+        Log.i(LOG_TAG, "Username: " + deserializedUser.getUsername());
+    }
+
+    // use RoboGuice
+    private void invokeRoboGuice()
+    {
+        tvHello.setText("RobiGuice is so simple...");
     }
 }
