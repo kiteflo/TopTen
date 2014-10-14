@@ -90,6 +90,7 @@
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="aopalliance-1.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
+    <orderEntry type="library" exported="" name="circlebutton-1.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
   </component>
 </module>
