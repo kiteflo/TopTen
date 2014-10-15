@@ -7,12 +7,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Password;
+import com.mobsandgeeks.saripaar.annotation.Required;
+import com.mobsandgeeks.saripaar.annotation.TextRule;
 import com.sobag.topten.domain.Model;
 import com.sobag.topten.domain.User;
 
@@ -20,9 +27,22 @@ import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 
 public class MainActivity extends RoboActivity
+        implements Validator.ValidationListener
 {
+    private Validator validator = null;
+
     @InjectView(R.id.tv_hello)
     TextView tvHello;
+
+    @Required(order = 1)
+    @Email(order = 2)
+    @InjectView(R.id.et_username)
+    EditText etUsername;
+
+    @Password(order = 3)
+    @TextRule(order = 4, minLength = 6, message = "Enter at least 6 characters.")
+    @InjectView(R.id.et_password)
+    EditText etPassword;
 
     @Inject
     Model model;
@@ -37,7 +57,8 @@ public class MainActivity extends RoboActivity
 
         // invokeCrashlytics();
         // invokeGSON();
-        invokeRoboGuice();
+        // invokeRoboGuice();
+        invokeSaripaar();
     }
 
     @Override
@@ -67,8 +88,28 @@ public class MainActivity extends RoboActivity
 
     public void onNext(View view)
     {
-        Intent nextpage = new Intent(this,SecondActivity.class);
-        startActivity(nextpage);
+        // Intent nextpage = new Intent(this,SecondActivity.class);
+        // startActivity(nextpage);
+        validator.validate();
+    }
+
+    public void onValidationSucceeded()
+    {
+        Toast.makeText(this, "Validation suceeded", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onValidationFailed(View failedView, Rule<?> failedRule)
+    {
+        String message = failedRule.getFailureMessage();
+
+        if (failedView instanceof EditText)
+        {
+            failedView.requestFocus();
+            ((EditText) failedView).setError(message);
+        } else
+        {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     // ------------------------------------------------------------------------
@@ -100,5 +141,11 @@ public class MainActivity extends RoboActivity
     private void invokeRoboGuice()
     {
         tvHello.setText("RobiGuice is so simple...");
+    }
+
+    private void invokeSaripaar()
+    {
+        validator = new Validator(this);
+        validator.setValidationListener(this);
     }
 }
