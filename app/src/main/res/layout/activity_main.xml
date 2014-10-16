@@ -43,6 +43,11 @@
         android:layout_below="@+id/et_password"
         android:text="Validate"
         />
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
     <at.markushi.ui.CircleButton
         android:layout_width="64dip"
