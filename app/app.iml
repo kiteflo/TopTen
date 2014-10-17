@@ -81,6 +81,7 @@
     <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="crashlytics-1.1.13" level="project" />
+    <orderEntry type="library" exported="" name="glide-3.3.1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="aopalliance-1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
@@ -91,8 +92,8 @@
     <orderEntry type="library" exported="" name="appcompat-v7-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
-    <orderEntry type="library" exported="" name="android-saripaar-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="circlebutton-1.1" level="project" />
+    <orderEntry type="library" exported="" name="android-saripaar-1.0.2" level="project" />
   </component>
 </module>
 

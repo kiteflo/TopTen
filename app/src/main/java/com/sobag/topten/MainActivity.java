@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -30,6 +32,10 @@ public class MainActivity extends RoboActivity
         implements Validator.ValidationListener
 {
     private Validator validator = null;
+
+    @InjectView(R.id.iv_image)
+    ImageView ivImage;
+
 
     @InjectView(R.id.tv_hello)
     TextView tvHello;
@@ -58,7 +64,8 @@ public class MainActivity extends RoboActivity
         // invokeCrashlytics();
         // invokeGSON();
         // invokeRoboGuice();
-        invokeSaripaar();
+        // invokeSaripaar();
+        invokeGlide();
     }
 
     @Override
@@ -147,5 +154,10 @@ public class MainActivity extends RoboActivity
     {
         validator = new Validator(this);
         validator.setValidationListener(this);
+    }
+
+    private void invokeGlide()
+    {
+        Glide.with(this).load("http://www.loewe-fenster.de/wp-content/uploads/loewe-fenster-maskottchen2.jpg").into(ivImage);
     }
 }

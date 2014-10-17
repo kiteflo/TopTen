@@ -42,4 +42,5 @@ dependencies {
     compile 'org.roboguice:roboguice:2.0'
     compile 'com.github.markushi:circlebutton:1.1'
     compile 'com.mobsandgeeks:android-saripaar:1.0.2'
+    compile 'com.github.bumptech.glide:glide:3.3.+'
 }
