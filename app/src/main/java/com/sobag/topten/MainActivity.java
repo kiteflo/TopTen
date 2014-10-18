@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -32,6 +34,7 @@ public class MainActivity extends RoboActivity
         implements Validator.ValidationListener
 {
     private Validator validator = null;
+    private MainActivity selfReference;
 
     @InjectView(R.id.iv_image)
     ImageView ivImage;
@@ -65,7 +68,8 @@ public class MainActivity extends RoboActivity
         // invokeGSON();
         // invokeRoboGuice();
         // invokeSaripaar();
-        invokeGlide();
+        // invokeGlide();
+        invokeSlidingMenu();
     }
 
     @Override
@@ -159,5 +163,30 @@ public class MainActivity extends RoboActivity
     private void invokeGlide()
     {
         Glide.with(this).load("http://www.loewe-fenster.de/wp-content/uploads/loewe-fenster-maskottchen2.jpg").into(ivImage);
+    }
+
+    private void invokeSlidingMenu()
+    {
+        selfReference = this;
+        View view = getLayoutInflater().inflate(R.layout.sidebar_menu, null);
+        Button but1 = (Button)view.findViewById(R.id.but1);
+        but1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(selfReference,"Hello Sidebar",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // configure the SlidingMenu
+        SlidingMenu menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidthRes(15);
+        menu.setBehindOffsetRes(15);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu.setMenu(view);
     }
 }
