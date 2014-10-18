@@ -1,9 +1,13 @@
 package com.sobag.topten.domain;
 
+import com.orm.SugarRecord;
+
+import java.util.List;
+
 /**
  * Created by tzhmufl2 on 13.10.14.
  */
-public class User
+public class User extends SugarRecord<User>
 {
     // ------------------------------------------------------------------------
     // members
@@ -13,6 +17,8 @@ public class User
     private String firstname;
     private String lastname;
     private String town;
+
+    public User(){}
 
     public User(String username,String firstname,String lastname, String town)
     {

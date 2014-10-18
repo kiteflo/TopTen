@@ -27,6 +27,8 @@ import com.mobsandgeeks.saripaar.annotation.TextRule;
 import com.sobag.topten.domain.Model;
 import com.sobag.topten.domain.User;
 
+import java.util.List;
+
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 
@@ -61,7 +63,7 @@ public class MainActivity extends RoboActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        // Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
         // invokeCrashlytics();
@@ -69,7 +71,8 @@ public class MainActivity extends RoboActivity
         // invokeRoboGuice();
         // invokeSaripaar();
         // invokeGlide();
-        invokeSlidingMenu();
+        // invokeSlidingMenu();
+        invokeActiveAndroid();
     }
 
     @Override
@@ -188,5 +191,15 @@ public class MainActivity extends RoboActivity
         menu.setFadeDegree(0.35f);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(view);
+    }
+
+    private void invokeActiveAndroid()
+    {
+        User user = new User("toptenuser","florian","mueller","frankfurt");
+        user.save();
+        Toast.makeText(this,"Created user, user ID = " +user.getId().toString(),Toast.LENGTH_LONG).show();
+
+        User lookedUp = User.findById(User.class, 1l);
+        Toast.makeText(this,"Looked up user, username: " +lookedUp.getUsername(),Toast.LENGTH_LONG).show();
     }
 }
