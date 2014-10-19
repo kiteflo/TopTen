@@ -18,6 +18,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -27,6 +28,8 @@ import com.mobsandgeeks.saripaar.annotation.TextRule;
 import com.sobag.topten.domain.Model;
 import com.sobag.topten.domain.User;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import roboguice.activity.RoboActivity;
@@ -35,15 +38,20 @@ import roboguice.inject.InjectView;
 public class MainActivity extends RoboActivity
         implements Validator.ValidationListener
 {
+    public static final String MIXPANEL_TOKEN = "60d24642e95dfd3859423d1d9004c7b5";
+    private MixpanelAPI mixpanel;
+
     private Validator validator = null;
     private MainActivity selfReference;
 
     @InjectView(R.id.iv_image)
     ImageView ivImage;
 
-
     @InjectView(R.id.tv_hello)
     TextView tvHello;
+
+    @InjectView(R.id.but_increase)
+    Button butIncrease;
 
     @Required(order = 1)
     @Email(order = 2)
@@ -72,7 +80,8 @@ public class MainActivity extends RoboActivity
         // invokeSaripaar();
         // invokeGlide();
         // invokeSlidingMenu();
-        invokeActiveAndroid();
+        // invokeActiveAndroid();
+        invokeMixpanel();
     }
 
     @Override
@@ -94,16 +103,8 @@ public class MainActivity extends RoboActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void onIncrease(View view)
-    {
-        model.setCounter(model.getCounter()+1);
-        tvHello.setText("Current Count: " +model.getCounter());
-    }
-
     public void onNext(View view)
     {
-        // Intent nextpage = new Intent(this,SecondActivity.class);
-        // startActivity(nextpage);
         validator.validate();
     }
 
@@ -124,6 +125,17 @@ public class MainActivity extends RoboActivity
         {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mixpanel.flush();
+        super.onDestroy();
+    }
+
+    public void onStop() {
+        super.onStop();
+        mixpanel.flush();
     }
 
     // ------------------------------------------------------------------------
@@ -201,5 +213,63 @@ public class MainActivity extends RoboActivity
 
         User lookedUp = User.findById(User.class, 1l);
         Toast.makeText(this,"Looked up user, username: " +lookedUp.getUsername(),Toast.LENGTH_LONG).show();
+    }
+
+    private void invokeMixpanel()
+    {
+        mixpanel = MixpanelAPI.getInstance(
+                this, MIXPANEL_TOKEN);
+
+        butIncrease.setOnClickListener(
+                new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                try
+                {
+                    JSONObject props =
+                            new JSONObject();
+                    props.put("Button",
+                            "Increase");
+                    props.put("Clicktype",
+                            "Short");
+                    mixpanel.track(
+                            "Short Click",
+                            props);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        butIncrease.setOnLongClickListener(
+                new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                try
+                {
+                    JSONObject props =
+                            new JSONObject();
+                    props.put("Button",
+                            "Increase");
+                    props.put("Clicktype",
+                            "Long");
+                    mixpanel.track(
+                            "Long Click",
+                            props);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+
+                return false;
+            }
+        });
     }
 }
