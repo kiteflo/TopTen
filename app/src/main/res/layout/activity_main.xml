@@ -9,23 +9,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_hello"
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/but_increase"
-        android:layout_below="@+id/tv_hello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onIncrease"
-        android:text="Increase..."/>
-
     <EditText
         android:id="@+id/et_username"
-        android:layout_below="@id/but_increase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Username"/>
@@ -34,7 +19,8 @@
         android:layout_below="@id/et_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:password="true"/>
+        android:password="true"
+        android:text="password"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -43,13 +29,5 @@
         android:layout_below="@+id/et_password"
         android:text="Validate"
         />
-
-    <at.markushi.ui.CircleButton
-        android:layout_width="64dip"
-        android:layout_height="64dip"
-        android:src="@drawable/ic_action_tick"
-        android:layout_centerInParent="true"
-        app:cb_color="#99CC00"
-        app:cb_pressedRingWidth="8dip" />
 
 </RelativeLayout>

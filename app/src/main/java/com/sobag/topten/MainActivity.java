@@ -31,9 +31,6 @@ public class MainActivity extends RoboActivity
 {
     private Validator validator = null;
 
-    @InjectView(R.id.tv_hello)
-    TextView tvHello;
-
     @Required(order = 1)
     @Email(order = 2)
     @InjectView(R.id.et_username)
@@ -78,12 +75,6 @@ public class MainActivity extends RoboActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onIncrease(View view)
-    {
-        model.setCounter(model.getCounter()+1);
-        tvHello.setText("Current Count: " +model.getCounter());
     }
 
     public void onNext(View view)
@@ -135,12 +126,6 @@ public class MainActivity extends RoboActivity
         // deserialize from JSON to object
         User deserializedUser = new Gson().fromJson(userJSON,User.class);
         Log.i(LOG_TAG, "Username: " + deserializedUser.getUsername());
-    }
-
-    // use RoboGuice
-    private void invokeRoboGuice()
-    {
-        tvHello.setText("RobiGuice is so simple...");
     }
 
     private void invokeSaripaar()
