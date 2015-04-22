@@ -8,12 +8,15 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.sobag.topten.domain.Item;
+
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -39,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
 
         invokeParse();
         saveItem();
+        lookupItem();
     }
 
 
@@ -106,6 +110,18 @@ public class MainActivity extends ActionBarActivity {
 
     public void lookupItem()
     {
-        ParseQuery<Item> items = new ParseQuery.getQuery("Item");
+        ParseQuery<Item> query = ParseQuery.getQuery("Item");
+        query.whereContains("name","Apfel");
+        query.findInBackground(new FindCallback<Item>()
+        {
+            @Override
+            public void done(List<Item> list, ParseException e)
+            {
+                for (Item item : list)
+                {
+                    Log.i("MainActivty",item.getName());
+                }
+            }
+        });
     }
 }
