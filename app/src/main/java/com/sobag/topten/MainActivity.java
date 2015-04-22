@@ -11,7 +11,9 @@ import com.crashlytics.android.Crashlytics;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.sobag.topten.domain.Item;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -28,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
         try
         {
             Parse.initialize(this, applicationID, clientID);
+            ParseObject.registerSubclass(Item.class);
         }
         catch (Error er)
         {
@@ -35,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         invokeParse();
+        saveItem();
     }
 
 
@@ -77,5 +81,31 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    public void saveItem()
+    {
+        Item item = new Item();
+        item.setName("Apfel");
+        item.setDescription("grünes saftiger Apfel...");
+        item.saveEventually(new SaveCallback()
+        {
+            @Override
+            public void done(ParseException e)
+            {
+                if (e == null)
+                {
+                    Toast.makeText(MainActivity.this, "Saved item!", Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void lookupItem()
+    {
+        ParseQuery<Item> items = new ParseQuery.getQuery("Item");
     }
 }
