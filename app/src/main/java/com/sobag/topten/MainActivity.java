@@ -99,6 +99,6 @@ public class MainActivity extends RoboActivity
     // use RoboGuice
     private void invokeRoboGuice()
     {
-        tvHello.setText("RobiGuice is so simple...");
+        tvHello.setText("RoboGuice is so simple...");
     }
 }
