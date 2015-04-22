@@ -8,6 +8,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -18,7 +22,19 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        invokeCrashlytics();
+        String applicationID = "CXGkcpXBGQlLoHrUDFMQKxm6xuQ9dPbdvz9UsFCC";
+        String clientID = "FnbSSjQP4n6Ue20hjqDWQNsi0xdwF5shEWIo9ReX";
+
+        try
+        {
+            Parse.initialize(this, applicationID, clientID);
+        }
+        catch (Error er)
+        {
+            er.printStackTrace();
+        }
+
+        invokeParse();
     }
 
 
@@ -41,11 +57,25 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // trigger crashlytics...
-    private void invokeCrashlytics()
+    public void invokeParse()
     {
-        Crashlytics.start(this);
-        int counter = 5/0;
-        Toast.makeText(this,"Division by zero triggered...",Toast.LENGTH_SHORT).show();
+        ParseObject po = new ParseObject("Person");
+        po.put("first","Donald");
+        po.put("last", "Duck");
+        po.saveInBackground(new SaveCallback()
+        {
+            @Override
+            public void done(ParseException e)
+            {
+                if (e != null)
+                {
+                    e.printStackTrace();
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this, "Saved!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
