@@ -17,10 +17,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        invokeCrashlytics();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,13 +36,5 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    // trigger crashlytics...
-    private void invokeCrashlytics()
-    {
-        Crashlytics.start(this);
-        int counter = 5/0;
-        Toast.makeText(this,"Division by zero triggered...",Toast.LENGTH_SHORT).show();
     }
 }
