@@ -38,7 +38,7 @@ import roboguice.inject.InjectView;
 public class MainActivity extends RoboActivity
         implements Validator.ValidationListener
 {
-    public static final String MIXPANEL_TOKEN = "60d24642e95dfd3859423d1d9004c7b5";
+    public static final String MIXPANEL_TOKEN = "0d7bab91622fea1985befa4027c54f38";
     private MixpanelAPI mixpanel;
 
     private Validator validator = null;
