@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
     // trigger crashlytics...
     private void invokeCrashlytics()
     {
-        Crashlytics.start(this);
+        Fabric.with(this, new Crashlytics());
         int counter = 5/0;
         Toast.makeText(this,"Division by zero triggered...",Toast.LENGTH_SHORT).show();
     }
