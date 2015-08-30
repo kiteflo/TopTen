@@ -46,7 +46,11 @@ public class MainActivity extends ActionBarActivity {
     private void invokeCrashlytics()
     {
         Fabric.with(this, new Crashlytics());
-        int counter = 5/0;
+
         Toast.makeText(this,"Division by zero triggered...",Toast.LENGTH_SHORT).show();
+
+        int counter = 5/0;
+
+        Toast.makeText(this,"Will be never displayed...",Toast.LENGTH_SHORT).show();
     }
 }
